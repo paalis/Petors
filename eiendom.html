@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Eiendom — Petors Estate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter+Tight:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  header.sub-hero{
+    max-width:1280px;margin:0 auto;
+    padding:100px 40px 80px;
+  }
+  .sub-hero .crumb{
+    font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:24px;
+  }
+  .sub-hero h1{
+    font-size:clamp(56px,8vw,128px);
+    margin-bottom:32px;max-width:14ch;
+  }
+  .sub-hero h1 em{font-style:italic;color:var(--accent);font-weight:300}
+  .sub-hero .lede{
+    font-family:"Fraunces",serif;font-weight:300;
+    font-size:clamp(20px,1.7vw,24px);line-height:1.45;
+    max-width:62ch;color:var(--ink-2);letter-spacing:-.005em;
+  }
+
+  section.section{
+    max-width:1280px;margin:0 auto;
+    padding:80px 40px;
+  }
+  .section-head{
+    display:grid;grid-template-columns:240px 1fr;gap:60px;
+    margin-bottom:60px;
+  }
+  .section-head h2{
+    font-size:clamp(32px,4vw,52px);max-width:20ch;
+  }
+  .section-head h2 em{font-style:italic;color:var(--accent);font-weight:300}
+
+  /* prinsipper */
+  .principles{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+    border-top:1px solid var(--rule);
+  }
+  .principle{
+    padding:36px 32px 36px 0;
+    border-bottom:1px solid var(--rule);
+    border-right:1px solid var(--rule);
+  }
+  .principle:nth-child(3n){border-right:none}
+  .principle:nth-child(3n+2),.principle:nth-child(3n){padding-left:32px}
+  .principle .num{
+    font-family:"Fraunces",serif;font-style:italic;
+    font-size:13px;color:var(--accent);margin-bottom:18px;
+  }
+  .principle h4{
+    font-family:"Fraunces",serif;font-weight:400;
+    font-size:22px;letter-spacing:-.005em;margin-bottom:12px;line-height:1.2;
+  }
+  .principle p{font-size:14px;color:var(--ink-2);line-height:1.55}
+
+  /* portefølje */
+  section.portfolio-sec{
+    background:var(--bg-2);
+    border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);
+    padding:80px 0;margin:40px 0;
+  }
+  .pf-inner{max-width:1280px;margin:0 auto;padding:0 40px}
+
+  .props{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+    margin-top:60px;
+  }
+  .prop{
+    background:var(--bg);
+    border:1px solid var(--rule);
+    border-radius:18px;
+    overflow:hidden;
+    transition:transform .4s, border-color .35s;
+    display:flex;flex-direction:column;
+  }
+  .prop:hover{transform:translateY(-4px);border-color:var(--ink)}
+
+  .prop-img{
+    height:240px;position:relative;overflow:hidden;
+    background:var(--bg-2);
+    border-bottom:1px solid var(--rule);
+  }
+  .prop-img svg{position:absolute;inset:0;width:100%;height:100%}
+  .prop-img .badge{
+    position:absolute;top:14px;left:14px;
+    font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+    background:rgba(250,250,248,.92);
+    color:var(--ink);
+    padding:6px 12px;border-radius:999px;
+    border:1px solid var(--rule-2);
+  }
+
+  .prop-body{padding:28px;flex:1;display:flex;flex-direction:column}
+  .prop-body h4{
+    font-family:"Fraunces",serif;font-weight:400;
+    font-size:24px;letter-spacing:-.01em;margin-bottom:6px;
+  }
+  .prop-body .loc{
+    font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:18px;
+  }
+  .prop-body p{font-size:14px;color:var(--ink-2);line-height:1.55;margin-bottom:auto}
+  .prop-body .meta{
+    margin-top:24px;padding-top:18px;
+    border-top:1px solid var(--rule);
+    display:flex;justify-content:space-between;
+    font-size:11px;color:var(--muted);
+    letter-spacing:.06em;text-transform:uppercase;
+  }
+  .prop-body .meta b{
+    color:var(--ink);font-weight:500;
+    font-size:13px;display:block;margin-top:4px;
+    text-transform:none;letter-spacing:0;
+  }
+
+  /* leie/forespørsel */
+  section.req{
+    max-width:1280px;margin:80px auto;
+    padding:80px 40px;
+    background:var(--ink);color:var(--bg);
+    border-radius:24px;
+  }
+  section.req h3{
+    font-family:"Fraunces",serif;font-weight:300;
+    font-size:clamp(36px,4.4vw,64px);letter-spacing:-.02em;
+    line-height:1.05;max-width:20ch;margin-bottom:24px;
+  }
+  section.req h3 em{font-style:italic;color:#7c97bd;font-weight:300}
+  section.req p{
+    color:rgba(250,250,248,.7);font-size:17px;
+    max-width:50ch;margin-bottom:36px;line-height:1.55;
+  }
+  section.req .btn-primary{background:var(--bg);color:var(--ink)}
+  section.req .btn-primary:hover{background:#7c97bd;color:var(--ink)}
+  section.req .btn-ghost{border-color:rgba(250,250,248,.25);color:var(--bg)}
+  section.req .btn-ghost:hover{border-color:var(--bg)}
+
+  @media (max-width:900px){
+    header.sub-hero{padding:60px 24px 40px}
+    section.section{padding:40px 24px}
+    .section-head{grid-template-columns:1fr;gap:24px}
+    .principles,.props{grid-template-columns:1fr;gap:16px}
+    .principle{padding:28px 0;border-right:none}
+    .principle:nth-child(3n+2),.principle:nth-child(3n){padding-left:0}
+    section.req{margin:40px 24px;padding:48px 32px;border-radius:18px}
+    .pf-inner{padding:0 24px}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="brand" aria-label="Petors as">
+      <img src="logo.jpg" alt="Petors as" style="height:32px;width:auto">
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Forside</a>
+      <a href="lyd-og-lys.html">Lyd &amp; lys</a>
+      <a href="eiendom.html" class="active">Eiendom</a>
+      <a href="kontakt.html">Kontakt</a>
+    </div>
+    <a href="kontakt.html" class="nav-cta">Kontakt</a>
+  </div>
+</nav>
+
+<header class="sub-hero">
+  <div class="crumb reveal"><a href="index.html">Forside</a> &nbsp;/&nbsp; Eiendom</div>
+  <h1 class="display reveal delay-1">Næring og <em>utleie</em> i utvalgte&nbsp;byer.</h1>
+  <p class="lede reveal delay-2">Petors Estate investerer i, utvikler og leier ut næringseiendom. Vi tar langsiktige posisjoner der vi tror på beliggenheten — og blir stående som eier gjennom konjunkturene.</p>
+</header>
+
+<!-- prinsipper -->
+<section class="section">
+  <div class="section-head">
+    <div class="section-label"><span class="num">01</span><span>Vår&nbsp;tilnærming</span></div>
+    <h2 class="display">Tre <em>prinsipper</em> for hvordan vi&nbsp;eier.</h2>
+  </div>
+
+  <div class="principles">
+    <div class="principle">
+      <div class="num">i.</div>
+      <h4>Langsiktig eierskap</h4>
+      <p>Vi setter ingen exit-frist. Det gir både oss og leietakerne forutsigbarhet, og åpner for å prioritere vedlikehold og utvikling som virker over tid.</p>
+    </div>
+    <div class="principle">
+      <div class="num">ii.</div>
+      <h4>Utvalgte beliggenheter</h4>
+      <p>Vi går inn i byer og bygg vi forstår, og holder porteføljen smal. Få, gode posisjoner slår en spredt portefølje i ukjent terreng.</p>
+    </div>
+    <div class="principle">
+      <div class="num">iii.</div>
+      <h4>Ryddige forhold</h4>
+      <p>Forutsigbare leiekontrakter og direkte dialog. Vi tror leietakere blir best ivaretatt når kommunikasjonen går rett mellom eier og bruker.</p>
+    </div>
+  </div>
+</section>
+
+<!-- portefølje -->
+<section class="portfolio-sec">
+  <div class="pf-inner">
+    <div class="section-head" style="margin-bottom:0">
+      <div class="section-label"><span class="num">02</span><span>Portefølje</span></div>
+      <h2 class="display">Andeler i utvalgte <em>nærings­eiendommer.</em></h2>
+    </div>
+
+    <div class="props">
+      <article class="prop">
+        <div class="prop-img">
+          <svg viewBox="0 0 400 240" preserveAspectRatio="none">
+            <rect width="400" height="240" fill="#f1f0eb"/>
+            <g stroke="#1f3a2e" stroke-width=".8" opacity=".55" fill="none">
+              <rect x="60" y="80" width="80" height="140"/>
+              <rect x="160" y="50" width="100" height="170"/>
+              <rect x="280" y="90" width="70" height="130"/>
+              <line x1="60" y1="120" x2="140" y2="120"/>
+              <line x1="60" y1="160" x2="140" y2="160"/>
+              <line x1="160" y1="90" x2="260" y2="90"/>
+              <line x1="160" y1="130" x2="260" y2="130"/>
+              <line x1="160" y1="170" x2="260" y2="170"/>
+              <line x1="280" y1="130" x2="350" y2="130"/>
+              <line x1="280" y1="170" x2="350" y2="170"/>
+            </g>
+          </svg>
+          <span class="badge">Andel</span>
+        </div>
+        <div class="prop-body">
+          <h4>Drammen Business Center</h4>
+          <div class="loc">Drammen · Buskerud</div>
+          <p>Næringseiendom i etablert kontorklynge sentralt i Drammen.</p>
+          <div class="meta">
+            <span>Type<b>Kontor / næring</b></span>
+            <span>Status<b>Aktiv eier</b></span>
+          </div>
+        </div>
+      </article>
+
+      <article class="prop">
+        <div class="prop-img">
+          <svg viewBox="0 0 400 240" preserveAspectRatio="none">
+            <rect width="400" height="240" fill="#f1f0eb"/>
+            <g stroke="#1f3a2e" stroke-width=".8" opacity=".55" fill="none">
+              <polygon points="100,200 200,40 300,200"/>
+              <rect x="140" y="120" width="120" height="80"/>
+              <line x1="160" y1="140" x2="240" y2="140"/>
+              <line x1="160" y1="170" x2="240" y2="170"/>
+              <rect x="190" y="160" width="20" height="40"/>
+              <line x1="100" y1="200" x2="300" y2="200"/>
+            </g>
+          </svg>
+          <span class="badge">Andel</span>
+        </div>
+        <div class="prop-body">
+          <h4>Keiser Wilhelms gate 25</h4>
+          <div class="loc">Ålesund · Møre og Romsdal</div>
+          <p>Bygård i historisk jugendsone i Ålesund sentrum.</p>
+          <div class="meta">
+            <span>Type<b>Sentrumseiendom</b></span>
+            <span>Status<b>Aktiv eier</b></span>
+          </div>
+        </div>
+      </article>
+
+      <article class="prop">
+        <div class="prop-img">
+          <svg viewBox="0 0 400 240" preserveAspectRatio="none">
+            <rect width="400" height="240" fill="#f1f0eb"/>
+            <g stroke="#1f3a2e" stroke-width=".8" opacity=".55" fill="none">
+              <rect x="80" y="60" width="240" height="160"/>
+              <line x1="80" y1="100" x2="320" y2="100"/>
+              <line x1="80" y1="140" x2="320" y2="140"/>
+              <line x1="80" y1="180" x2="320" y2="180"/>
+              <line x1="160" y1="60" x2="160" y2="220"/>
+              <line x1="240" y1="60" x2="240" y2="220"/>
+            </g>
+          </svg>
+          <span class="badge">Aksjepost</span>
+        </div>
+        <div class="prop-body">
+          <h4>Aurora Eiendom AS</h4>
+          <div class="loc">Norge</div>
+          <p>Aksjepost i eiendomsselskap med diversifisert nærings­portefølje.</p>
+          <div class="meta">
+            <span>Type<b>Aksjepost</b></span>
+            <span>Status<b>Langsiktig</b></span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- forespørsel -->
+<section class="req">
+  <h3 class="display">Leter du etter <em>lokaler</em> — eller har en eiendom å&nbsp;snakke&nbsp;om?</h3>
+  <p>Send noen ord om hva du leter etter eller foreslår, så ringer vi deg opp.</p>
+  <div style="display:flex;gap:14px;flex-wrap:wrap">
+    <a href="kontakt.html" class="btn btn-primary">Ta kontakt →</a>
+    <a href="mailto:estate@petors.no" class="btn btn-ghost">estate@petors.no</a>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-inner">
+    <div>
+      <div class="foot-brand">
+        <svg viewBox="0 0 32 32" style="width:22px;height:22px" aria-hidden="true"><circle cx="16" cy="16" r="11" fill="none" stroke="#4a6c9b" stroke-width="3.5"/><circle cx="16" cy="16" r="3.5" fill="#4a6c9b"/></svg>
+        Petors
+      </div>
+      <p>Lyd, lys og eiendom siden 2006.<br>Hommelvik, Trøndelag.</p>
+    </div>
+    <div>
+      <h5>Virksomhet</h5>
+      <p><a href="lyd-og-lys.html">Lyd &amp; lys</a><br><a href="eiendom.html">Eiendom</a><br><a href="kontakt.html">Kontakt</a></p>
+    </div>
+    <div>
+      <h5>Kontakt</h5>
+      <p><a href="mailto:post@petors.no">post@petors.no</a><br><a href="mailto:estate@petors.no">estate@petors.no</a></p>
+    </div>
+    <div>
+      <h5>Adresse</h5>
+      <p>Hommelvikhøgda<br>Malvikvegen 1565<br>7550 Hommelvik</p>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© Petors AS 2026 · Org.nr. 989 217 607</span>
+    <span>Hommelvik · Trøndelag</span>
+  </div>
+</footer>
+
+<script>
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  window.addEventListener('load',()=>document.querySelectorAll('header.sub-hero .reveal').forEach(el=>el.classList.add('in')));
+</script>
+</body>
+</html>
