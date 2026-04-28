@@ -48,75 +48,68 @@
   .entrance{
     position:relative;
     display:block;
-    padding:56px 48px;
+    padding:52px 48px;
     border:1px solid var(--rule);
-    border-radius:20px;
+    border-radius:6px;
     background:var(--bg);
-    transition:all .4s cubic-bezier(.2,.7,.2,1);
+    transition:all .35s cubic-bezier(.2,.7,.2,1);
     overflow:hidden;
-    min-height:380px;
+    min-height:360px;
     display:flex;flex-direction:column;justify-content:space-between;
   }
   .entrance:hover{
-    background:var(--ink);
+    background:var(--bg-2);
     border-color:var(--ink);
-    transform:translateY(-4px);
+    transform:translateY(-3px);
+    box-shadow:0 16px 48px rgba(0,0,0,.06);
   }
-  .entrance:hover *{color:var(--bg)}
-  .entrance:hover .ent-tag{border-color:rgba(250,250,248,.3);color:var(--bg)}
-  .entrance:hover .ent-arrow{transform:translateX(8px) rotate(-45deg)}
+  .entrance:hover .ent-arrow{transform:translateX(6px)}
 
   .ent-tag{
     display:inline-block;align-self:flex-start;
-    font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
-    padding:6px 14px;border:1px solid var(--rule-2);border-radius:999px;
-    margin-bottom:36px;transition:all .4s;
+    font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);
+    padding:5px 12px;border:1px solid var(--rule-2);border-radius:3px;
+    margin-bottom:36px;
   }
   .entrance h2{
     font-family:"Fraunces",serif;font-weight:300;
     font-size:clamp(40px,4.4vw,64px);letter-spacing:-.02em;
     line-height:1.05;margin-bottom:20px;
-    transition:color .4s;
   }
-  .entrance h2 em{font-style:italic;color:var(--accent);font-weight:300;transition:color .4s}
-  .entrance:hover h2 em{color:var(--bg)}
+  .entrance h2 em{font-style:italic;color:var(--accent);font-weight:300}
   .entrance p{
-    font-size:16px;color:var(--ink-2);line-height:1.55;
+    font-size:15px;color:var(--ink-2);line-height:1.6;
     max-width:42ch;margin-bottom:36px;
-    transition:color .4s;
   }
   .ent-foot{
     display:flex;justify-content:space-between;align-items:center;
-    padding-top:28px;border-top:1px solid var(--rule);
-    transition:border-color .4s;
+    padding-top:24px;border-top:1px solid var(--rule);
   }
-  .entrance:hover .ent-foot{border-color:rgba(250,250,248,.2)}
   .ent-foot span{
-    font-size:12px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--muted);transition:color .4s;
+    font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);
   }
   .ent-arrow{
-    font-family:"Fraunces",serif;font-size:28px;
-    transition:transform .4s ease;
+    font-size:20px;
+    transition:transform .3s ease;
     color:var(--accent);
   }
-  .entrance:hover .ent-arrow{color:var(--bg)}
 
   /* etos-strip */
   section.ethos{
     border-top:1px solid var(--rule);
     border-bottom:1px solid var(--rule);
     background:var(--bg-2);
-    padding:80px 40px;
+    padding:96px 40px;
   }
   .ethos-inner{
     max-width:1280px;margin:0 auto;
-    display:grid;grid-template-columns:1fr 1.6fr;gap:80px;align-items:center;
+    display:grid;grid-template-columns:200px 1fr;gap:80px;align-items:center;
   }
   .ethos p{
     font-family:"Fraunces",serif;font-weight:300;
-    font-size:clamp(22px,2.2vw,32px);line-height:1.4;
-    letter-spacing:-.01em;
+    font-size:clamp(22px,2.2vw,34px);line-height:1.45;
+    letter-spacing:-.015em;
   }
   .ethos p em{font-style:italic;color:var(--accent)}
 
@@ -252,8 +245,7 @@
     <div>
       <h5>Kontakt</h5>
       <p>
-        <a href="mailto:post@petors.no">post@petors.no</a><br>
-        Hverdager 09–17
+        <a href="mailto:pjw@petors.no">pjw@petors.no</a><br><a href="mailto:taw@petors.no">taw@petors.no</a>
       </p>
     </div>
     <div>
