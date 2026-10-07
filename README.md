@@ -18,7 +18,7 @@ og endre `<img src="logo.jpg" ...>` til `<img src="logo.svg" ...>` i alle fire H
 
 ## Design
 - Farger: hvit, stålgrå (#eef1f4) og logoens blå (#4a6c9b) som eneste aksent. Alle ligger som CSS-variabler øverst i styles.css.
-- Skrift: Jost (titler, meny – geometrisk som logoen) og Source Serif 4 (brødtekst).
+- Skrift: Schibsted Grotesk for all tekst (titler 500–600, brødtekst 400).
 - Merket (ring + prikk) er det eneste grafiske elementet: forstørret med ringer på forsiden, og som stedsmarkør i porteføljen.
 - Ingen JavaScript. Ringanimasjonen på forsiden kjører én gang og slås av ved «redusert bevegelse».
 
