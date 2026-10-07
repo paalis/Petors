@@ -13,7 +13,7 @@
   // intro: én gang per besøk, ikke ved redusert bevegelse
   try{if(!sessionStorage.getItem('petors-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('intro-playing','intro-waves')}catch(e){}
 </script>
-<link rel="stylesheet" href="styles.css?v=7">
+<link rel="stylesheet" href="styles.css?v=8">
 <style>
   .hero{padding:clamp(48px,8vw,104px) 0 clamp(56px,8vw,104px)}
   .hero .wrap{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:48px;align-items:center}
@@ -34,15 +34,27 @@
     .hero .rings{order:-1;max-width:180px;justify-self:start;margin-bottom:24px}
     .doors .wrap{grid-template-columns:1fr;gap:64px}
   }
+  .door-visual{display:none}
   @media (max-width:600px){
-    /* merket stort øverst til høyre, ringene går ut over kanten */
-    .hero{position:relative;overflow:hidden;padding:200px 0 48px}
-    .hero .rings{position:absolute;top:-36px;right:-72px;width:300px;max-width:none;margin:0;
-      -webkit-mask-image:linear-gradient(to bottom,#000 50%,transparent 82%);mask-image:linear-gradient(to bottom,#000 50%,transparent 82%)}
-    .hero h1{margin-bottom:20px}
-    .doors .wrap{gap:40px}
-    .door{padding-top:20px}
-    .door > p{margin-bottom:8px}
+    /* første skjerm: merket stort i toppen, overskriften nederst */
+    .hero{position:relative;overflow:hidden;padding:0}
+    .hero .wrap{min-height:min(calc(100svh - 60px - 64px - env(safe-area-inset-bottom)),720px);align-content:end;padding-bottom:40px}
+    .hero .rings{position:absolute;top:-80px;right:-150px;width:500px;max-width:none;margin:0;
+      -webkit-mask-image:linear-gradient(to bottom,#000 50%,transparent 88%);mask-image:linear-gradient(to bottom,#000 50%,transparent 88%)}
+    .hero h1{font-size:clamp(48px,15vw,64px);margin-bottom:20px}
+
+    /* inngangene som kort; hele kortet kan trykkes */
+    .doors .wrap{gap:16px}
+    .door{position:relative;border-top:0;padding:0;background:var(--mist);border-radius:20px;overflow:hidden}
+    .door > :not(.door-visual){margin-left:22px;margin-right:22px}
+    .door h2{margin-top:22px;margin-bottom:8px;font-size:32px}
+    .door h2 a::after{content:"";position:absolute;inset:0;border-radius:20px}
+    .door > p{margin-bottom:6px;font-size:16px}
+    .door .link{margin-bottom:14px}
+    .door-visual{display:block;height:168px;background:#e3e8ee}
+    .door-visual img{width:100%;height:100%;object-fit:cover}
+    .door-visual--rings{background:var(--rings) no-repeat 50% 50%/300px,#e3e8ee}
+    .door:active{background:#e6eaef}
   }
   /* intro: merket tegnes midt på skjermen og glir på plass i hero */
   .intro{display:none}
@@ -98,12 +110,14 @@
   <section class="doors" aria-label="Våre virksomheter">
     <div class="wrap">
       <article class="door">
+        <div class="door-visual door-visual--rings" aria-hidden="true"></div>
         <h2><a href="lyd-og-lys.html">Lyd og lys</a></h2>
         <p>Utleie av lyd-, lys- og sceneutstyr, med eller uten tekniker. Fra et lite møterom til hovedscene på festival.</p>
         <a class="link" href="lyd-og-lys.html">Les mer om lyd og lys</a>
       </article>
 
       <article class="door">
+        <div class="door-visual" aria-hidden="true"><img src="img/dbc.jpg" alt="" loading="lazy"></div>
         <h2><a href="eiendom.html">Eiendom</a></h2>
         <p>Petors Estate har langsiktig eierskap i næringseiendom og eiendomsselskaper i utvalgte norske byer.</p>
         <a class="link" href="eiendom.html">Les mer om eiendom</a>
