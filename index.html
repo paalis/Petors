@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400&display=swap" rel="stylesheet">
 <script>
   // intro: én gang per besøk, ikke ved redusert bevegelse
-  try{if(!sessionStorage.getItem('petors-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('intro-playing')}catch(e){}
+  try{if(!sessionStorage.getItem('petors-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('intro-playing','intro-waves')}catch(e){}
 </script>
 <link rel="stylesheet" href="styles.css?v=5">
 <style>
@@ -38,7 +38,8 @@
   .intro{display:none}
   .intro-playing .intro{display:block;position:fixed;inset:0;z-index:100;background:var(--paper);cursor:pointer}
   .intro svg{position:absolute;overflow:visible}
-  .intro-playing .rings .wave{animation-play-state:paused}
+  .intro-waves .rings .wave{animation-play-state:paused}
+  .intro-playing .hero .rings .mark,.intro-playing .hero .rings .core{opacity:0}
   .intro-playing body{overflow:hidden}
 </style>
 </head>
@@ -147,43 +148,92 @@
   var ov=document.querySelector('.intro'),svg=ov.querySelector('svg'),
       ring=svg.querySelector('.mark'),dot=svg.querySelector('.core'),
       hero=document.querySelector('.hero .rings'),done=false,anims=[];
+  var SMOOTH='cubic-bezier(.22,1,.36,1)';          // myk utbremsing
   function finish(){
     if(done)return;done=true;
     anims.forEach(function(a){a.cancel()});
     try{sessionStorage.setItem('petors-intro','1')}catch(e){}
-    root.classList.remove('intro-playing');ov.remove();
+    root.classList.remove('intro-playing','intro-waves');ov.remove();
   }
   if(!ov.animate||!hero){finish();return}
   ov.addEventListener('click',finish);
   addEventListener('keydown',finish,{once:true});
 
-  // overlay-svg får samme størrelse som hero-svg, så merket kan lande eksakt
-  var size=hero.getBoundingClientRect().width,cx=innerWidth/2,cy=innerHeight/2;
-  svg.style.width=svg.style.height=size+'px';
-  svg.style.left=(cx-size/2)+'px';svg.style.top=(cy-size/2)+'px';
-  var S=Math.max(1,Math.min(3,130/(size*83/600)));   // merket ca. 130 px bredt midt på
-  svg.style.transform='scale('+S+')';
+  // merket tegnes stort og skaleres ned til hero-størrelse, så det holder seg skarpt
+  var cx=innerWidth/2,cy=innerHeight/2,heroW=hero.getBoundingClientRect().width;
+  var big=Math.max(heroW,Math.min(3,130/(heroW*83/600))*heroW);  // merket ca. 130 px bredt midt på
+  svg.style.width=svg.style.height=big+'px';
+  svg.style.left=(cx-big/2)+'px';svg.style.top=(cy-big/2)+'px';
+  svg.style.willChange='transform';
 
   var C=2*Math.PI*36;
   dot.style.transformOrigin='300px 300px';
-  anims.push(dot.animate([{transform:'scale(0)'},{transform:'scale(1)'}],
-    {duration:450,easing:'cubic-bezier(.34,1.56,.64,1)',fill:'both'}));
+  anims.push(dot.animate([{opacity:0,transform:'scale(.5)'},{opacity:1,transform:'scale(1)'}],
+    {duration:600,easing:SMOOTH,fill:'both'}));
   anims.push(ring.animate([{strokeDasharray:C,strokeDashoffset:C},{strokeDasharray:C,strokeDashoffset:0}],
-    {duration:550,delay:200,easing:'cubic-bezier(.2,.7,.2,1)',fill:'both'}));
+    {duration:750,delay:80,easing:SMOOTH,fill:'both'}));
 
-  setTimeout(function(){
+  // bevegelse og fade starter samtidig som ringen lukker seg, og slutter likt
+  var wait=new Promise(function(r){setTimeout(r,620)});
+  var fonts=document.fonts?document.fonts.ready:Promise.resolve();
+  Promise.all([wait,Promise.race([fonts,new Promise(function(r){setTimeout(r,900)})])]).then(function(){
     if(done)return;
-    var r=hero.getBoundingClientRect();   // måles nå, etter at skriftene har lastet
-    var dx=r.left+r.width/2-cx,dy=r.top+r.height/2-cy;
+    var r=hero.getBoundingClientRect();
     var onScreen=r.bottom>0&&r.top<innerHeight;
-    if(onScreen)anims.push(svg.animate([{transform:'scale('+S+')'},{transform:'translate('+dx+'px,'+dy+'px) scale('+(r.width/size)+')'}],
-      {duration:650,easing:'cubic-bezier(.65,0,.35,1)',fill:'forwards'}));
+    var D=900;
+    if(onScreen){
+      var dx=r.left+r.width/2-cx,dy=r.top+r.height/2-cy;
+      anims.push(svg.animate([{transform:'none'},{transform:'translate('+dx+'px,'+dy+'px) scale('+(r.width/big)+')'}],
+        {duration:D,easing:'cubic-bezier(.6,0,.2,1)',fill:'forwards'}));
+      // ringene i hero starter mens merket setter seg
+      setTimeout(function(){root.classList.remove('intro-waves')},D-250);
+    } else {
+      anims.push(svg.animate([{opacity:1},{opacity:0}],{duration:D,easing:'ease-out',fill:'forwards'}));
+    }
     var fade=ov.animate([{backgroundColor:'rgba(255,255,255,1)'},{backgroundColor:'rgba(255,255,255,0)'}],
-      {duration:450,delay:onScreen?500:0,easing:'ease-out',fill:'forwards'});
-    if(!onScreen)anims.push(svg.animate([{opacity:1},{opacity:0}],{duration:450,fill:'forwards'}));
+      {duration:D-200,delay:200,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'});
     anims.push(fade);
     fade.onfinish=finish;
-  },850);
+  });
+})();
+</script>
+<script>
+// merket i hero følger musen litt, og ringene sprer seg når man scroller
+(function(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var svg=document.querySelector('.hero .rings');if(!svg)return;
+  var root=document.documentElement,
+      mark=svg.querySelector('.mark'),core=svg.querySelector('.core'),
+      waves=[].slice.call(svg.querySelectorAll('.wave')),
+      base=waves.map(function(w){return +w.getAttribute('r')});
+  var tx=0,ty=0,ts=0,x=0,y=0,s=0,raf=0;
+
+  function kick(){if(!raf)raf=requestAnimationFrame(step)}
+  function step(){
+    raf=0;
+    x+=(tx-x)*.08;y+=(ty-y)*.08;s+=(ts-s)*.12;
+    if(!root.classList.contains('intro-playing')){
+      core.setAttribute('cx',300+x*16);core.setAttribute('cy',300+y*16);
+      mark.setAttribute('cx',300+x*9);mark.setAttribute('cy',300+y*9);
+      waves.forEach(function(w,i){
+        var depth=1-base[i]/300;                         // indre ringer beveger seg mest
+        w.setAttribute('cx',300+x*10*depth);w.setAttribute('cy',300+y*10*depth);
+        w.setAttribute('r',base[i]*(1+s*.45*(base[i]/300)));
+      });
+    }
+    if(Math.abs(tx-x)>.001||Math.abs(ty-y)>.001||Math.abs(ts-s)>.001||root.classList.contains('intro-playing'))kick();
+  }
+
+  addEventListener('pointermove',function(e){
+    if(e.pointerType!=='mouse')return;
+    var r=svg.getBoundingClientRect(),dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2),
+        d=Math.hypot(dx,dy)||1,k=Math.min(1,d/700);
+    tx=dx/d*k;ty=dy/d*k;kick();
+  },{passive:true});
+  document.addEventListener('mouseleave',function(){tx=ty=0;kick()});
+  function onScroll(){ts=Math.min(1,Math.max(0,scrollY/(innerHeight*.8)));kick()}
+  addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
 })();
 </script>
 </body>
