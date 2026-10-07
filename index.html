@@ -13,7 +13,7 @@
   // intro: én gang per besøk, ikke ved redusert bevegelse
   try{if(!sessionStorage.getItem('petors-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('intro-playing','intro-waves')}catch(e){}
 </script>
-<link rel="stylesheet" href="styles.css?v=5">
+<link rel="stylesheet" href="styles.css?v=7">
 <style>
   .hero{padding:clamp(48px,8vw,104px) 0 clamp(56px,8vw,104px)}
   .hero .wrap{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:48px;align-items:center}
@@ -33,6 +33,16 @@
     .hero{padding-top:32px}
     .hero .rings{order:-1;max-width:180px;justify-self:start;margin-bottom:24px}
     .doors .wrap{grid-template-columns:1fr;gap:64px}
+  }
+  @media (max-width:600px){
+    /* merket stort øverst til høyre, ringene går ut over kanten */
+    .hero{position:relative;overflow:hidden;padding:200px 0 48px}
+    .hero .rings{position:absolute;top:-36px;right:-72px;width:300px;max-width:none;margin:0;
+      -webkit-mask-image:linear-gradient(to bottom,#000 50%,transparent 82%);mask-image:linear-gradient(to bottom,#000 50%,transparent 82%)}
+    .hero h1{margin-bottom:20px}
+    .doors .wrap{gap:40px}
+    .door{padding-top:20px}
+    .door > p{margin-bottom:8px}
   }
   /* intro: merket tegnes midt på skjermen og glir på plass i hero */
   .intro{display:none}
