@@ -8,12 +8,12 @@
 <link rel="icon" href="mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400&display=swap" rel="stylesheet">
 <script>
   // intro: én gang per besøk, ikke ved redusert bevegelse
   try{if(!sessionStorage.getItem('petors-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('intro-playing','intro-waves')}catch(e){}
 </script>
-<link rel="stylesheet" href="styles.css?v=6">
+<link rel="stylesheet" href="styles.css?v=7">
 <style>
   .hero{padding:clamp(48px,8vw,104px) 0 clamp(56px,8vw,104px)}
   .hero .wrap{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:48px;align-items:center}
@@ -34,12 +34,23 @@
     .hero .rings{order:-1;max-width:180px;justify-self:start;margin-bottom:24px}
     .doors .wrap{grid-template-columns:1fr;gap:64px}
   }
+  @media (max-width:600px){
+    /* merket stort øverst til høyre, ringene går ut over kanten */
+    .hero{position:relative;overflow:hidden;padding:200px 0 48px}
+    .hero .rings{position:absolute;top:-36px;right:-72px;width:300px;max-width:none;margin:0;
+      -webkit-mask-image:linear-gradient(to bottom,#000 50%,transparent 82%);mask-image:linear-gradient(to bottom,#000 50%,transparent 82%)}
+    .hero h1{margin-bottom:20px}
+    .doors .wrap{gap:40px}
+    .door{padding-top:20px}
+    .door > p{margin-bottom:8px}
+  }
   /* intro: merket tegnes midt på skjermen og glir på plass i hero */
   .intro{display:none}
   .intro-playing .intro{display:block;position:fixed;inset:0;z-index:100;background:var(--paper);cursor:pointer}
   .intro svg{position:absolute;overflow:visible}
   .intro-waves .rings .wave{animation-play-state:paused}
   .intro-playing .hero .rings .mark,.intro-playing .hero .rings .core{opacity:0}
+  html{scrollbar-gutter:stable}
   .intro-playing body{overflow:hidden}
 </style>
 </head>
@@ -211,8 +222,10 @@
   function kick(){if(!raf)raf=requestAnimationFrame(step)}
   function step(){
     raf=0;
+    // under introen står merket i ro; etterpå glir det mykt mot musen
+    if(root.classList.contains('intro-playing')){kick();return}
     x+=(tx-x)*.08;y+=(ty-y)*.08;s+=(ts-s)*.12;
-    if(!root.classList.contains('intro-playing')){
+    {
       core.setAttribute('cx',300+x*16);core.setAttribute('cy',300+y*16);
       mark.setAttribute('cx',300+x*9);mark.setAttribute('cy',300+y*9);
       waves.forEach(function(w,i){
@@ -221,7 +234,7 @@
         w.setAttribute('r',base[i]*(1+s*.45*(base[i]/300)));
       });
     }
-    if(Math.abs(tx-x)>.001||Math.abs(ty-y)>.001||Math.abs(ts-s)>.001||root.classList.contains('intro-playing'))kick();
+    if(Math.abs(tx-x)>.001||Math.abs(ty-y)>.001||Math.abs(ts-s)>.001)kick();
   }
 
   addEventListener('pointermove',function(e){
