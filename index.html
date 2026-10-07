@@ -40,6 +40,7 @@
   .intro svg{position:absolute;overflow:visible}
   .intro-waves .rings .wave{animation-play-state:paused}
   .intro-playing .hero .rings .mark,.intro-playing .hero .rings .core{opacity:0}
+  html{scrollbar-gutter:stable}
   .intro-playing body{overflow:hidden}
 </style>
 </head>
@@ -211,8 +212,10 @@
   function kick(){if(!raf)raf=requestAnimationFrame(step)}
   function step(){
     raf=0;
+    // under introen står merket i ro; etterpå glir det mykt mot musen
+    if(root.classList.contains('intro-playing')){kick();return}
     x+=(tx-x)*.08;y+=(ty-y)*.08;s+=(ts-s)*.12;
-    if(!root.classList.contains('intro-playing')){
+    {
       core.setAttribute('cx',300+x*16);core.setAttribute('cy',300+y*16);
       mark.setAttribute('cx',300+x*9);mark.setAttribute('cy',300+y*9);
       waves.forEach(function(w,i){
@@ -221,7 +224,7 @@
         w.setAttribute('r',base[i]*(1+s*.45*(base[i]/300)));
       });
     }
-    if(Math.abs(tx-x)>.001||Math.abs(ty-y)>.001||Math.abs(ts-s)>.001||root.classList.contains('intro-playing'))kick();
+    if(Math.abs(tx-x)>.001||Math.abs(ty-y)>.001||Math.abs(ts-s)>.001)kick();
   }
 
   addEventListener('pointermove',function(e){
