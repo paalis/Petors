@@ -3,359 +3,169 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Eiendom — Petors Estate</title>
+<title>Eiendom — Petors</title>
+<meta name="description" content="Petors investerer i, utvikler og leier ut næringseiendom, med langsiktig eierskap i utvalgte norske byer.">
+<link rel="icon" href="mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter+Tight:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
-  header.sub-hero{
-    max-width:1280px;margin:0 auto;
-    padding:100px 40px 80px;
+  .register{list-style:none;border-bottom:1px solid var(--rule)}
+  .register-head,.asset{
+    display:grid;grid-template-columns:168px minmax(0,1fr) 150px 130px;
+    gap:28px;align-items:center;
   }
-  .sub-hero .crumb{
-    font-size:11px;letter-spacing:.18em;text-transform:uppercase;
-    color:var(--muted);margin-bottom:24px;
+  .register-head{
+    font-family:var(--sans);font-size:14px;color:var(--ink-2);
+    padding-bottom:12px;border-bottom:2px solid var(--ink);
   }
-  .sub-hero h1{
-    font-size:clamp(56px,8vw,128px);
-    margin-bottom:32px;max-width:14ch;
-  }
-  .sub-hero h1 em{font-style:italic;color:var(--accent);font-weight:300}
-  .sub-hero .lede{
-    font-family:"Fraunces",serif;font-weight:300;
-    font-size:clamp(20px,1.7vw,24px);line-height:1.45;
-    max-width:62ch;color:var(--ink-2);letter-spacing:-.005em;
+  .register-head span:first-child{grid-column:2}
+  .asset{padding:20px 0;border-top:1px solid var(--rule)}
+  .asset:first-child{border-top:0}
+  .asset img{width:168px;aspect-ratio:4/3;object-fit:cover;background:var(--mist)}
+  .asset h3{margin-bottom:4px}
+  .asset p{font-size:16px;color:var(--ink-2)}
+  .asset .place,.asset .share{font-family:var(--sans);font-size:16px}
+  .asset .share{font-variant-numeric:tabular-nums}
+
+  /* stedsmarkør: merket i miniatyr */
+  .place{display:flex;align-items:center;gap:10px}
+  .place::before{
+    content:"";flex:none;width:14px;height:14px;border-radius:50%;
+    border:3px solid var(--blue);
+    background:radial-gradient(circle,var(--blue) 0 2px,transparent 2.5px);
   }
 
-  section.section{
-    max-width:1280px;margin:0 auto;
-    padding:80px 40px;
-  }
-  .section-head{
-    display:grid;grid-template-columns:240px 1fr;gap:60px;
-    margin-bottom:60px;
-  }
-  .section-head h2{
-    font-size:clamp(32px,4vw,52px);max-width:20ch;
-  }
-  .section-head h2 em{font-style:italic;color:var(--accent);font-weight:300}
-
-  /* prinsipper */
-  .principles{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:0;
-    border-top:1px solid var(--rule);
-  }
-  .principle{
-    padding:36px 32px 36px 0;
-    border-bottom:1px solid var(--rule);
-    border-right:1px solid var(--rule);
-  }
-  .principle:nth-child(3n){border-right:none}
-  .principle:nth-child(3n+2),.principle:nth-child(3n){padding-left:32px}
-  .principle .num{
-    font-family:"Fraunces",serif;font-style:italic;
-    font-size:13px;color:var(--accent);margin-bottom:18px;
-  }
-  .principle h4{
-    font-family:"Fraunces",serif;font-weight:400;
-    font-size:22px;letter-spacing:-.005em;margin-bottom:12px;line-height:1.2;
-  }
-  .principle p{font-size:14px;color:var(--ink-2);line-height:1.55}
-
-  /* portefølje */
-  section.portfolio-sec{
-    background:var(--bg-2);
-    border-top:1px solid var(--rule);
-    border-bottom:1px solid var(--rule);
-    padding:96px 0;margin:40px 0;
-  }
-  .pf-inner{max-width:1280px;margin:0 auto;padding:0 40px}
-
-  .props{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
-    margin-top:60px;
-  }
-  .prop{
-    background:var(--bg);
-    border:1px solid var(--rule);
-    border-radius:6px;
-    overflow:hidden;
-    transition:transform .3s, border-color .3s, box-shadow .3s;
-    display:flex;flex-direction:column;
-  }
-  .prop:hover{transform:translateY(-3px);border-color:var(--ink);box-shadow:0 12px 40px rgba(0,0,0,.06)}
-
-  .prop-img{
-    height:240px;position:relative;overflow:hidden;
-    background:var(--bg-2);
-    border-bottom:1px solid var(--rule);
-  }
-  .prop-img svg{position:absolute;inset:0;width:100%;height:100%}
-  .prop-img .badge{
-    position:absolute;top:14px;left:14px;
-    font-size:10px;letter-spacing:.18em;text-transform:uppercase;
-    background:rgba(250,250,248,.92);
-    color:var(--ink);
-    padding:6px 12px;border-radius:999px;
-    border:1px solid var(--rule-2);
-  }
-
-  .prop-body{padding:28px;flex:1;display:flex;flex-direction:column}
-  .prop-body h4{
-    font-family:"Fraunces",serif;font-weight:400;
-    font-size:24px;letter-spacing:-.01em;margin-bottom:6px;
-  }
-  .prop-body .loc{
-    font-size:11px;letter-spacing:.18em;text-transform:uppercase;
-    color:var(--muted);margin-bottom:18px;
-  }
-  .prop-body p{font-size:14px;color:var(--ink-2);line-height:1.55;margin-bottom:auto}
-  .prop-body .meta{
-    margin-top:24px;padding-top:18px;
-    border-top:1px solid var(--rule);
-    display:flex;justify-content:space-between;
-    font-size:11px;color:var(--muted);
-    letter-spacing:.06em;text-transform:uppercase;
-  }
-  .prop-body .meta b{
-    color:var(--ink);font-weight:500;
-    font-size:13px;display:block;margin-top:4px;
-    text-transform:none;letter-spacing:0;
-  }
-
-  /* leie/forespørsel */
-  section.req{
-    max-width:1280px;margin:80px auto;
-    padding:80px 40px;
-    background:var(--ink);color:var(--bg);
-    border-radius:6px;
-  }
-  section.req h3{
-    font-family:"Fraunces",serif;font-weight:300;
-    font-size:clamp(36px,4.4vw,64px);letter-spacing:-.02em;
-    line-height:1.05;max-width:20ch;margin-bottom:24px;
-  }
-  section.req h3 em{font-style:italic;color:#7c97bd;font-weight:300}
-  section.req p{
-    color:rgba(250,250,248,.7);font-size:17px;
-    max-width:50ch;margin-bottom:36px;line-height:1.55;
-  }
-  section.req .btn-primary{background:var(--bg);color:var(--ink)}
-  section.req .btn-primary:hover{background:#7c97bd;color:var(--ink)}
-  section.req .btn-ghost{border-color:rgba(250,250,248,.25);color:var(--bg)}
-  section.req .btn-ghost:hover{border-color:var(--bg)}
+  .principles h3{margin-bottom:10px}
 
   @media (max-width:900px){
-    header.sub-hero{padding:60px 24px 40px}
-    section.section{padding:40px 24px}
-    .section-head{grid-template-columns:1fr;gap:24px}
-    .principles,.props{grid-template-columns:1fr;gap:16px}
-    .principle{padding:28px 0;border-right:none}
-    .principle:nth-child(3n+2),.principle:nth-child(3n){padding-left:0}
-    section.req{margin:40px 24px;padding:48px 32px;border-radius:18px}
-    .pf-inner{padding:0 24px}
+    .register-head{display:none}
+    .asset{grid-template-columns:120px minmax(0,1fr);gap:8px 20px;align-items:start}
+    .asset img{width:120px;grid-row:span 3}
+    .asset .place,.asset .share{grid-column:2}
+    .asset .share::before{content:"Eierandel: ";color:var(--ink-2)}
   }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <a href="index.html" class="brand" aria-label="Petors as">
-      <img src="logo.jpg" alt="Petors as" style="height:32px;width:auto">
-    </a>
+<nav class="site-nav" aria-label="Hovedmeny">
+  <div class="wrap">
+    <a href="index.html" class="brand"><img src="logo.jpg" alt="Petors as – til forsiden"></a>
     <div class="nav-links">
-      <a href="index.html">Forside</a>
-      <a href="lyd-og-lys.html">Lyd &amp; lys</a>
-      <a href="eiendom.html" class="active">Eiendom</a>
+      <a href="lyd-og-lys.html">Lyd og lys</a>
+      <a href="eiendom.html" aria-current="page">Eiendom</a>
       <a href="kontakt.html">Kontakt</a>
     </div>
-    <a href="kontakt.html" class="nav-cta">Kontakt</a>
   </div>
 </nav>
 
-<header class="sub-hero">
-  <div class="crumb reveal"><a href="index.html">Forside</a> &nbsp;/&nbsp; Eiendom</div>
-  <h1 class="display reveal delay-1">Næring og <em>utleie</em> i utvalgte&nbsp;byer.</h1>
-  <p class="lede reveal delay-2">Petors Estate investerer i, utvikler og leier ut næringseiendom. Vi tar langsiktige posisjoner der vi tror på beliggenheten — og blir stående som eier gjennom konjunkturene.</p>
-</header>
-
-<!-- prinsipper -->
-<section class="section">
-  <div class="section-head">
-    <div class="section-label"><span class="num">01</span><span>Vår&nbsp;tilnærming</span></div>
-    <h2 class="display">Tre <em>prinsipper</em> for hvordan vi&nbsp;eier.</h2>
-  </div>
-
-  <div class="principles">
-    <div class="principle">
-      <div class="num">i.</div>
-      <h4>Langsiktig eierskap</h4>
-      <p>Vi setter ingen exit-frist. Det gir både oss og leietakerne forutsigbarhet, og åpner for å prioritere vedlikehold og utvikling som virker over tid.</p>
+<main>
+  <header class="page-head">
+    <div class="wrap">
+      <h1>Eiendom</h1>
+      <p class="lede">Petors investerer i, utvikler og leier ut næringseiendom. Vi går inn der vi tror på beliggenheten, og blir værende som eier over tid.</p>
     </div>
-    <div class="principle">
-      <div class="num">ii.</div>
-      <h4>Utvalgte beliggenheter</h4>
-      <p>Vi går inn i byer og bygg vi forstår, og holder porteføljen smal. Få, gode posisjoner slår en spredt portefølje i ukjent terreng.</p>
-    </div>
-    <div class="principle">
-      <div class="num">iii.</div>
-      <h4>Ryddige forhold</h4>
-      <p>Forutsigbare leiekontrakter og direkte dialog. Vi tror leietakere blir best ivaretatt når kommunikasjonen går rett mellom eier og bruker.</p>
-    </div>
-  </div>
-</section>
+  </header>
 
-<!-- portefølje -->
-<section class="portfolio-sec">
-  <div class="pf-inner">
-    <div class="section-head" style="margin-bottom:0">
-      <div class="section-label"><span class="num">02</span><span>Portefølje</span></div>
-      <h2 class="display">Andeler i utvalgte <em>nærings­eiendommer.</em></h2>
-    </div>
-
-    <div class="props">
-      <article class="prop">
-        <div class="prop-img">
-          <img src="img/dbc.jpg" alt="Drammen Business Center" style="width:100%;height:100%;object-fit:cover">
-          <span class="badge">Andel</span>
-        </div>
-        <div class="prop-body">
-          <h4>Drammen Business Center</h4>
-          <div class="loc">Drammen · Buskerud</div>
-          <p>Næringseiendom i etablert kontorklynge sentralt i Drammen.</p>
-          <div class="meta">
-            <span>Type<b>Kontor / næring</b></span>
-            <span>Status<b>Aktiv eier</b></span>
-          </div>
-        </div>
-      </article>
-
-      <article class="prop">
-        <div class="prop-img">
-          <img src="img/alesund-kwg25.jpg" alt="Keiser Wilhelms gate, Ålesund" style="width:100%;height:100%;object-fit:cover">
-          <span class="badge">Andel</span>
-        </div>
-        <div class="prop-body">
-          <h4>Keiser Wilhelms gate 25</h4>
-          <div class="loc">Ålesund · Møre og Romsdal</div>
-          <p>Bygård i historisk jugendsone i Ålesund sentrum.</p>
-          <div class="meta">
-            <span>Type<b>Sentrumseiendom</b></span>
-            <span>Status<b>Aktiv eier</b></span>
-          </div>
-        </div>
-      </article>
-
-      <article class="prop">
-        <div class="prop-img">
-          <img src="img/aurora-eiendom.jpg" alt="Aurora Eiendom AS" style="width:100%;height:100%;object-fit:cover">
-          <span class="badge">Aksjepost</span>
-        </div>
-        <div class="prop-body">
-          <h4>Aurora Eiendom AS</h4>
-          <div class="loc">Norge</div>
-          <p>Aksjepost i eiendomsselskap med diversifisert nærings­portefølje.</p>
-          <div class="meta">
-            <span>Type<b>Aksjepost</b></span>
-            <span>Status<b>Langsiktig</b></span>
-          </div>
-        </div>
-      </article>
-
-      <article class="prop">
-        <div class="prop-img">
-          <img src="img/nesta-eiendom.png" alt="Nesta Eiendom AS" style="width:100%;height:100%;object-fit:cover">
-          <span class="badge">50% majoritet</span>
-        </div>
-        <div class="prop-body">
-          <h4>Nesta Eiendom AS</h4>
-          <div class="loc">Selbu · Trøndelag</div>
-          <p>Majoritetseierskapet i selskap med utleie av næringseiendom i Selbu.</p>
-          <div class="meta">
-            <span>Type<b>Næringsutleie</b></span>
-            <span>Status<b>Aktiv eier</b></span>
-          </div>
-        </div>
-      </article>
-
-      <article class="prop">
-        <div class="prop-img">
-          <img src="img/living-eiendom.png" alt="Living Eiendom AS" style="width:100%;height:100%;object-fit:cover">
-          <span class="badge">22% minoritet</span>
-        </div>
-        <div class="prop-body">
-          <h4>Living Eiendom AS</h4>
-          <div class="loc">Norge</div>
-          <p>Minoritetsandel i eiendomsselskap med blandet bolig- og næringsportefølje.</p>
-          <div class="meta">
-            <span>Type<b>Blandet portefølje</b></span>
-            <span>Status<b>Langsiktig</b></span>
-          </div>
-        </div>
-      </article>
-
-      <article class="prop">
-        <div class="prop-img">
-          <img src="img/selbu-tomter.jpg" alt="Boligtomter i Selbu" style="width:100%;height:100%;object-fit:cover">
-          <span class="badge">Utvikling</span>
-        </div>
-        <div class="prop-body">
-          <h4>Boligtomter i Selbu</h4>
-          <div class="loc">Selbu · Trøndelag</div>
-          <p>Boligtomter under utvikling i Selbu kommune.</p>
-          <div class="meta">
-            <span>Type<b>Boligutvikling</b></span>
-            <span>Status<b>Under utvikling</b></span>
-          </div>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- forespørsel -->
-<section class="req">
-  <h3 class="display">Leter du etter <em>lokaler</em> — eller har en eiendom å&nbsp;snakke&nbsp;om?</h3>
-  <p>Send noen ord om hva du leter etter eller foreslår, så ringer vi deg opp.</p>
-  <div style="display:flex;gap:14px;flex-wrap:wrap">
-    <a href="kontakt.html" class="btn btn-primary">Ta kontakt →</a>
-    <a href="mailto:taw@petors.no" class="btn btn-ghost">taw@petors.no</a>
-  </div>
-</section>
-
-<footer>
-  <div class="foot-inner">
-    <div>
-      <div class="foot-brand">
-        <img src="logo.jpg" alt="Petors" style="height:28px;width:auto">
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Portefølje</h2>
+        <p>Direkte eierskap i bygg og andeler i eiendomsselskaper.</p>
       </div>
-      <p>Lyd, lys og eiendom siden 2006.<br>Hommelvik, Trøndelag.</p>
+
+      <div class="register-head" aria-hidden="true">
+        <span>Eiendom</span><span>Sted</span><span>Eierandel</span>
+      </div>
+      <ul class="register">
+        <li class="asset">
+          <img src="img/dbc.jpg" alt="Inngangen til Drammen Business Center" loading="lazy">
+          <div><h3>Drammen Business Center</h3><p>Kontor og næring i etablert klynge ved Drammen stasjon.</p></div>
+          <div class="place">Drammen</div>
+          <div class="share">Andel</div>
+        </li>
+        <li class="asset">
+          <img src="img/alesund-kwg25.jpg" alt="Bygården i Keiser Wilhelms gate 25" loading="lazy">
+          <div><h3>Keiser Wilhelms gate 25</h3><p>Bygård i jugendbyen, Ålesund sentrum.</p></div>
+          <div class="place">Ålesund</div>
+          <div class="share">Andel</div>
+        </li>
+        <li class="asset">
+          <img src="img/nesta-eiendom.png" alt="Nesta Eiendom AS" loading="lazy">
+          <div><h3>Nesta Eiendom AS</h3><p>Utleie av næringseiendom.</p></div>
+          <div class="place">Selbu</div>
+          <div class="share">50&nbsp;%</div>
+        </li>
+        <li class="asset">
+          <img src="img/selbu-tomter.jpg" alt="Nye boliger på tomtefeltet i Selbu" loading="lazy">
+          <div><h3>Boligtomter</h3><p>Tomtefelt under utvikling.</p></div>
+          <div class="place">Selbu</div>
+          <div class="share">Utvikling</div>
+        </li>
+        <li class="asset">
+          <img src="img/aurora-eiendom.jpg" alt="Handelseiendom eid av Aurora Eiendom" loading="lazy">
+          <div><h3>Aurora Eiendom AS</h3><p>Eiendomsselskap med bred næringsportefølje.</p></div>
+          <div class="place">Norge</div>
+          <div class="share">Aksjepost</div>
+        </li>
+        <li class="asset">
+          <img src="img/living-eiendom.png" alt="Living Eiendom AS" loading="lazy">
+          <div><h3>Living Eiendom AS</h3><p>Blandet bolig- og næringsportefølje.</p></div>
+          <div class="place">Norge</div>
+          <div class="share">22&nbsp;%</div>
+        </li>
+      </ul>
     </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Slik eier vi</h2>
+      </div>
+      <div class="grid principles">
+        <div>
+          <h3>Langsiktig</h3>
+          <p>Ingen exit-frist. Det gir forutsigbarhet for leietakerne og rom for vedlikehold og utvikling som lønner seg over tid.</p>
+        </div>
+        <div>
+          <h3>Få og gode posisjoner</h3>
+          <p>Vi går inn i byer og bygg vi forstår, og holder porteføljen smal.</p>
+        </div>
+        <div>
+          <h3>Direkte dialog</h3>
+          <p>Forutsigbare kontrakter og kort vei mellom eier og leietaker.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing">
+    <div class="wrap">
+      <div>
+        <h2>Leter du etter lokaler?</h2>
+        <p>Eller har du en eiendom du vil snakke om? Send noen ord, så ringer vi tilbake.</p>
+      </div>
+      <div class="actions">
+        <a class="btn" href="mailto:taw@petors.no?subject=Eiendom">Send e-post</a>
+        <a class="link" href="tel:+4790777724">907 77 724</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
     <div>
-      <h5>Virksomhet</h5>
-      <p><a href="lyd-og-lys.html">Lyd &amp; lys</a><br><a href="eiendom.html">Eiendom</a><br><a href="kontakt.html">Kontakt</a></p>
+      <img src="logo.jpg" alt="Petors as">
+      <div>Org.nr. 989 217 607</div>
     </div>
-    <div>
-      <h5>Kontakt</h5>
-      <p><a href="mailto:pjw@petors.no">pjw@petors.no</a><br><a href="mailto:taw@petors.no">taw@petors.no</a></p>
-    </div>
-    <div>
-      <h5>Adresse</h5>
-      <p>Hommelvikhøgda<br>Malvikvegen 1565<br>7550 Hommelvik</p>
-    </div>
-  </div>
-  <div class="foot-bottom">
-    <span>© Petors AS 2026 · Org.nr. 989 217 607</span>
-    <span>Hommelvik · Trøndelag</span>
+    <address>Hommelvikhøgda, Malvikvegen 1565<br>7550 Hommelvik</address>
+    <div><a href="mailto:post@petors.no">post@petors.no</a></div>
   </div>
 </footer>
 
-<script>
-  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-  window.addEventListener('load',()=>document.querySelectorAll('header.sub-hero .reveal').forEach(el=>el.classList.add('in')));
-</script>
 </body>
 </html>

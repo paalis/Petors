@@ -1,4 +1,4 @@
-# Petors — nettsideforslag (v4)
+# Petors — nettsideforslag (v5)
 
 ## Filer
 - `index.html` — Forside (enkel, kort)
@@ -16,9 +16,11 @@ I footer brukes en forenklet SVG-versjon av selve sirkelmerket — det skalerer 
 Hvis du senere får en ren SVG-versjon av logoen, bytt ut `logo.jpg` med `logo.svg`
 og endre `<img src="logo.jpg" ...>` til `<img src="logo.svg" ...>` i alle fire HTML-filer.
 
-## Palett
-Monokrom (offwhite + nesten-svart) med logoens egen blå (#4a6c9b) som eneste aksent.
-Alle farger ligger som CSS-variabler øverst i styles.css.
+## Design
+- Farger: hvit, stålgrå (#eef1f4) og logoens blå (#4a6c9b) som eneste aksent. Alle ligger som CSS-variabler øverst i styles.css.
+- Skrift: Jost (titler, meny – geometrisk som logoen) og Source Serif 4 (brødtekst).
+- Merket (ring + prikk) er det eneste grafiske elementet: forstørret med ringer på forsiden, og som stedsmarkør i porteføljen.
+- Ingen JavaScript. Ringanimasjonen på forsiden kjører én gang og slås av ved «redusert bevegelse».
 
 ## Åpne lokalt
 Dobbeltklikk index.html — sidene linker seg imellom.
