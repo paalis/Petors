@@ -197,5 +197,44 @@
   });
 })();
 </script>
+<script>
+// merket i hero følger musen litt, og ringene sprer seg når man scroller
+(function(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var svg=document.querySelector('.hero .rings');if(!svg)return;
+  var root=document.documentElement,
+      mark=svg.querySelector('.mark'),core=svg.querySelector('.core'),
+      waves=[].slice.call(svg.querySelectorAll('.wave')),
+      base=waves.map(function(w){return +w.getAttribute('r')});
+  var tx=0,ty=0,ts=0,x=0,y=0,s=0,raf=0;
+
+  function kick(){if(!raf)raf=requestAnimationFrame(step)}
+  function step(){
+    raf=0;
+    x+=(tx-x)*.08;y+=(ty-y)*.08;s+=(ts-s)*.12;
+    if(!root.classList.contains('intro-playing')){
+      core.setAttribute('cx',300+x*16);core.setAttribute('cy',300+y*16);
+      mark.setAttribute('cx',300+x*9);mark.setAttribute('cy',300+y*9);
+      waves.forEach(function(w,i){
+        var depth=1-base[i]/300;                         // indre ringer beveger seg mest
+        w.setAttribute('cx',300+x*10*depth);w.setAttribute('cy',300+y*10*depth);
+        w.setAttribute('r',base[i]*(1+s*.45*(base[i]/300)));
+      });
+    }
+    if(Math.abs(tx-x)>.001||Math.abs(ty-y)>.001||Math.abs(ts-s)>.001||root.classList.contains('intro-playing'))kick();
+  }
+
+  addEventListener('pointermove',function(e){
+    if(e.pointerType!=='mouse')return;
+    var r=svg.getBoundingClientRect(),dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2),
+        d=Math.hypot(dx,dy)||1,k=Math.min(1,d/700);
+    tx=dx/d*k;ty=dy/d*k;kick();
+  },{passive:true});
+  document.addEventListener('mouseleave',function(){tx=ty=0;kick()});
+  function onScroll(){ts=Math.min(1,Math.max(0,scrollY/(innerHeight*.8)));kick()}
+  addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+})();
+</script>
 </body>
 </html>
