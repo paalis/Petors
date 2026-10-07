@@ -9,6 +9,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400&display=swap" rel="stylesheet">
+<script>
+  // intro: én gang per besøk, ikke ved redusert bevegelse
+  try{if(!sessionStorage.getItem('petors-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('intro-playing')}catch(e){}
+</script>
 <link rel="stylesheet" href="styles.css?v=5">
 <style>
   .hero{padding:clamp(48px,8vw,104px) 0 clamp(56px,8vw,104px)}
@@ -30,9 +34,22 @@
     .hero .rings{order:-1;max-width:180px;justify-self:start;margin-bottom:24px}
     .doors .wrap{grid-template-columns:1fr;gap:64px}
   }
+  /* intro: merket tegnes midt på skjermen og glir på plass i hero */
+  .intro{display:none}
+  .intro-playing .intro{display:block;position:fixed;inset:0;z-index:100;background:var(--paper);cursor:pointer}
+  .intro svg{position:absolute;overflow:visible}
+  .intro-playing .rings .wave{animation-play-state:paused}
+  .intro-playing body{overflow:hidden}
 </style>
 </head>
 <body>
+
+<div class="intro" aria-hidden="true">
+  <svg viewBox="0 0 600 600">
+    <circle class="mark" cx="300" cy="300" r="36" fill="none" stroke="#4a6c9b" stroke-width="11" transform="rotate(-90 300 300)"/>
+    <circle class="core" cx="300" cy="300" r="11.5" fill="#4a6c9b"/>
+  </svg>
+</div>
 
 <nav class="site-nav" aria-label="Hovedmeny">
   <div class="wrap">
@@ -123,5 +140,51 @@
   </div>
 </footer>
 
+<script>
+(function(){
+  var root=document.documentElement;
+  if(!root.classList.contains('intro-playing'))return;
+  var ov=document.querySelector('.intro'),svg=ov.querySelector('svg'),
+      ring=svg.querySelector('.mark'),dot=svg.querySelector('.core'),
+      hero=document.querySelector('.hero .rings'),done=false,anims=[];
+  function finish(){
+    if(done)return;done=true;
+    anims.forEach(function(a){a.cancel()});
+    try{sessionStorage.setItem('petors-intro','1')}catch(e){}
+    root.classList.remove('intro-playing');ov.remove();
+  }
+  if(!ov.animate||!hero){finish();return}
+  ov.addEventListener('click',finish);
+  addEventListener('keydown',finish,{once:true});
+
+  // overlay-svg får samme størrelse som hero-svg, så merket kan lande eksakt
+  var size=hero.getBoundingClientRect().width,cx=innerWidth/2,cy=innerHeight/2;
+  svg.style.width=svg.style.height=size+'px';
+  svg.style.left=(cx-size/2)+'px';svg.style.top=(cy-size/2)+'px';
+  var S=Math.max(1,Math.min(3,130/(size*83/600)));   // merket ca. 130 px bredt midt på
+  svg.style.transform='scale('+S+')';
+
+  var C=2*Math.PI*36;
+  dot.style.transformOrigin='300px 300px';
+  anims.push(dot.animate([{transform:'scale(0)'},{transform:'scale(1)'}],
+    {duration:450,easing:'cubic-bezier(.34,1.56,.64,1)',fill:'both'}));
+  anims.push(ring.animate([{strokeDasharray:C,strokeDashoffset:C},{strokeDasharray:C,strokeDashoffset:0}],
+    {duration:550,delay:200,easing:'cubic-bezier(.2,.7,.2,1)',fill:'both'}));
+
+  setTimeout(function(){
+    if(done)return;
+    var r=hero.getBoundingClientRect();   // måles nå, etter at skriftene har lastet
+    var dx=r.left+r.width/2-cx,dy=r.top+r.height/2-cy;
+    var onScreen=r.bottom>0&&r.top<innerHeight;
+    if(onScreen)anims.push(svg.animate([{transform:'scale('+S+')'},{transform:'translate('+dx+'px,'+dy+'px) scale('+(r.width/size)+')'}],
+      {duration:650,easing:'cubic-bezier(.65,0,.35,1)',fill:'forwards'}));
+    var fade=ov.animate([{backgroundColor:'rgba(255,255,255,1)'},{backgroundColor:'rgba(255,255,255,0)'}],
+      {duration:450,delay:onScreen?500:0,easing:'ease-out',fill:'forwards'});
+    if(!onScreen)anims.push(svg.animate([{opacity:1},{opacity:0}],{duration:450,fill:'forwards'}));
+    anims.push(fade);
+    fade.onfinish=finish;
+  },850);
+})();
+</script>
 </body>
 </html>
