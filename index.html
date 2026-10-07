@@ -3,261 +3,141 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Petors — Lyd, lys og eiendom</title>
+<title>Petors — lyd, lys og eiendom</title>
+<meta name="description" content="Petors leier ut lyd-, lys- og sceneutstyr og investerer i næringseiendom. Hommelvik, siden 2006.">
+<link rel="icon" href="mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter+Tight:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
-  /* ===== forside-spesifikt ===== */
-  header.hero{
-    max-width:1280px;margin:0 auto;
-    padding:140px 40px 100px;
-    position:relative;
-  }
-  .hero-grid{
-    display:grid;grid-template-columns:1fr;gap:60px;
-  }
-  h1.hero-title{
-    font-size:clamp(64px,10vw,168px);
-    max-width:14ch;
-  }
-  h1.hero-title em{
-    font-style:italic;font-weight:300;
-    color:var(--accent);
-  }
-  .hero-row{
-    display:grid;grid-template-columns:1fr 1fr;gap:80px;
-    margin-top:24px;align-items:end;
-  }
-  .hero-lede{
-    font-family:"Fraunces",serif;font-weight:300;
-    font-size:clamp(20px,1.7vw,24px);line-height:1.45;
-    color:var(--ink);max-width:48ch;letter-spacing:-.005em;
-  }
-  .hero-cta{display:flex;gap:14px;justify-self:end;flex-wrap:wrap}
+  .hero{padding:clamp(48px,8vw,104px) 0 clamp(56px,8vw,104px)}
+  .hero .wrap{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:48px;align-items:center}
+  .hero h1{margin-bottom:32px}
+  .hero .rings{max-width:460px;justify-self:end}
 
-  /* to virksomheter — hovedinngangene */
-  section.entrances{
-    max-width:1280px;margin:0 auto;
-    padding:80px 40px 120px;
-  }
-  .entrance-grid{
-    display:grid;grid-template-columns:1fr 1fr;gap:24px;
-  }
-  .entrance{
-    position:relative;
-    display:block;
-    padding:52px 48px;
-    border:1px solid var(--rule);
-    border-radius:6px;
-    background:var(--bg);
-    transition:all .35s cubic-bezier(.2,.7,.2,1);
-    overflow:hidden;
-    min-height:360px;
-    display:flex;flex-direction:column;justify-content:space-between;
-  }
-  .entrance:hover{
-    background:var(--bg-2);
-    border-color:var(--ink);
-    transform:translateY(-3px);
-    box-shadow:0 16px 48px rgba(0,0,0,.06);
-  }
-  .entrance:hover .ent-arrow{transform:translateX(6px)}
-
-  .ent-tag{
-    display:inline-block;align-self:flex-start;
-    font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);
-    padding:5px 12px;border:1px solid var(--rule-2);border-radius:3px;
-    margin-bottom:36px;
-  }
-  .entrance h2{
-    font-family:"Fraunces",serif;font-weight:300;
-    font-size:clamp(40px,4.4vw,64px);letter-spacing:-.02em;
-    line-height:1.05;margin-bottom:20px;
-  }
-  .entrance h2 em{font-style:italic;color:var(--accent);font-weight:300}
-  .entrance p{
-    font-size:15px;color:var(--ink-2);line-height:1.6;
-    max-width:42ch;margin-bottom:36px;
-  }
-  .ent-foot{
-    display:flex;justify-content:space-between;align-items:center;
-    padding-top:24px;border-top:1px solid var(--rule);
-  }
-  .ent-foot span{
-    font-size:11px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--muted);
-  }
-  .ent-arrow{
-    font-size:20px;
-    transition:transform .3s ease;
-    color:var(--accent);
-  }
-
-  /* etos-strip */
-  section.ethos{
-    border-top:1px solid var(--rule);
-    border-bottom:1px solid var(--rule);
-    background:var(--bg-2);
-    padding:96px 40px;
-  }
-  .ethos-inner{
-    max-width:1280px;margin:0 auto;
-    display:grid;grid-template-columns:200px 1fr;gap:80px;align-items:center;
-  }
-  .ethos p{
-    font-family:"Fraunces",serif;font-weight:300;
-    font-size:clamp(22px,2.2vw,34px);line-height:1.45;
-    letter-spacing:-.015em;
-  }
-  .ethos p em{font-style:italic;color:var(--accent)}
-
-  /* enkel kontakt-CTA */
-  section.cta-strip{
-    max-width:1280px;margin:0 auto;
-    padding:120px 40px;
-    text-align:center;
-  }
-  .cta-strip h3{
-    font-family:"Fraunces",serif;font-weight:300;
-    font-size:clamp(40px,5vw,72px);letter-spacing:-.02em;
-    margin-bottom:32px;
-  }
-  .cta-strip h3 em{font-style:italic;color:var(--accent)}
-  .cta-strip .btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .doors .wrap{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px 64px}
+  .door{border-top:2px solid var(--ink);padding-top:28px;display:flex;flex-direction:column}
+  .door h2{margin-bottom:14px}
+  .door h2 a{text-decoration:none}
+  .door h2 a:hover{color:var(--blue)}
+  .door > p{color:var(--ink-2);margin-bottom:28px}
+  .door ul{list-style:none;margin-bottom:32px;font-size:16px}
+  .door li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-top:1px solid var(--rule)}
+  .door li:last-child{border-bottom:1px solid var(--rule)}
+  .door li span:last-child{color:var(--ink-2);text-align:right}
+  .door .link{margin-top:auto;align-self:flex-start}
 
   @media (max-width:900px){
-    header.hero{padding:80px 24px 40px}
-    .hero-row{grid-template-columns:1fr;gap:32px}
-    .hero-cta{justify-self:start}
-    section.entrances{padding:40px 24px 80px}
-    .entrance-grid{grid-template-columns:1fr}
-    .entrance{padding:40px 32px;min-height:auto}
-    .ethos-inner{grid-template-columns:1fr;gap:32px}
-    section.ethos,section.cta-strip{padding:60px 24px}
+    .hero .wrap{grid-template-columns:1fr;gap:8px}
+    .hero{padding-top:32px}
+    .hero .rings{order:-1;max-width:180px;justify-self:start;margin-bottom:24px}
+    .doors .wrap{grid-template-columns:1fr;gap:64px}
   }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <a href="index.html" class="brand" aria-label="Petors as">
-      <img src="logo.jpg" alt="Petors as" style="height:32px;width:auto">
-    </a>
+<nav class="site-nav" aria-label="Hovedmeny">
+  <div class="wrap">
+    <a href="index.html" class="brand"><img src="logo.jpg" alt="Petors as – til forsiden"></a>
     <div class="nav-links">
-      <a href="index.html" class="active">Forside</a>
-      <a href="lyd-og-lys.html">Lyd &amp; lys</a>
+      <a href="lyd-og-lys.html">Lyd og lys</a>
       <a href="eiendom.html">Eiendom</a>
       <a href="kontakt.html">Kontakt</a>
     </div>
   </div>
 </nav>
 
-<header class="hero">
-  <div class="hero-grid">
-    <span class="eyebrow reveal">Hommelvik, Trøndelag · siden 2006</span>
-    <h1 class="hero-title display reveal delay-1">
-      Lyd, lys<br>
-      og <em>eiendom.</em>
-    </h1>
-
-    <div class="hero-row">
-      <p class="hero-lede reveal delay-2">
-        Petors driver to virksomheter fra Hommelvik: utleie av lyd-, lys- og scenteknisk utstyr, og forvaltning av næringseiendom i utvalgte norske byer.
-      </p>
-      <div class="hero-cta reveal delay-3">
-        <a href="lyd-og-lys.html" class="btn btn-primary">Lyd &amp; lys →</a>
-        <a href="eiendom.html" class="btn btn-ghost">Eiendom →</a>
-      </div>
-    </div>
-  </div>
-</header>
-
-<!-- to inngangsdører -->
-<section class="entrances">
-  <div class="entrance-grid">
-    <a href="lyd-og-lys.html" class="entrance reveal">
-      <span class="ent-tag">Petors AS</span>
+<main>
+  <header class="hero">
+    <div class="wrap">
       <div>
-        <h2>Lyd, lys og <em>scene</em></h2>
-        <p>Komplette tekniske leveranser til alle typer arrangementer — fra konferanse til festival. Utleie eller fullservice med tekniker.</p>
+        <h1>Lyd, lys og eiendom.</h1>
+        <p class="lede">Petors leier ut lyd-, lys- og sceneutstyr til arrangementer over hele landet, og investerer i næringseiendom. Fra Hommelvik siden 2006.</p>
       </div>
-      <div class="ent-foot">
-        <span>Se utstyrsparken</span>
-        <span class="ent-arrow">→</span>
-      </div>
-    </a>
-
-    <a href="eiendom.html" class="entrance reveal delay-1">
-      <span class="ent-tag">Petors Estate</span>
-      <div>
-        <h2>Næring og <em>utleie</em></h2>
-        <p>Investering, utvikling og utleie av næringseiendom i utvalgte norske byer. Langsiktig eierskap.</p>
-      </div>
-      <div class="ent-foot">
-        <span>Se portefølje</span>
-        <span class="ent-arrow">→</span>
-      </div>
-    </a>
-  </div>
-</section>
-
-<!-- etos -->
-<section class="ethos">
-  <div class="ethos-inner">
-    <span class="section-label"><span class="num">·</span><span>Vår&nbsp;holdning</span></span>
-    <p>To virksomheter, samme tilnærming: <em>ting skal virke, og det skal vare.</em> Vi tror på solid utstyr, ryddige avtaler og kunder som kommer tilbake.</p>
-  </div>
-</section>
-
-<!-- enkel kontakt -->
-<section class="cta-strip">
-  <h3 class="display">Skal vi <em>snakkes?</em></h3>
-  <div class="btns">
-    <a href="kontakt.html" class="btn btn-primary">Kontakt oss →</a>
-    <a href="mailto:post@petors.no" class="btn btn-ghost">post@petors.no</a>
-  </div>
-</section>
-
-<footer>
-  <div class="foot-inner">
-    <div>
-      <div class="foot-brand">
-        <img src="logo.jpg" alt="Petors" style="height:28px;width:auto">
-      </div>
-      <p>Lyd, lys og eiendom siden 2006.<br>Hommelvik, Trøndelag.</p>
+      <svg class="rings" viewBox="0 0 600 600" aria-hidden="true">
+        <circle class="wave" cx="300" cy="300" r="288" style="--i:6;--o:.18"/>
+        <circle class="wave" cx="300" cy="300" r="252" style="--i:5;--o:.26"/>
+        <circle class="wave" cx="300" cy="300" r="216" style="--i:4;--o:.34"/>
+        <circle class="wave" cx="300" cy="300" r="180" style="--i:3;--o:.44"/>
+        <circle class="wave" cx="300" cy="300" r="144" style="--i:2;--o:.54"/>
+        <circle class="wave" cx="300" cy="300" r="108" style="--i:1;--o:.66"/>
+        <circle class="wave" cx="300" cy="300" r="72"  style="--i:0;--o:.8"/>
+        <circle class="mark" cx="300" cy="300" r="36" stroke-width="11"/>
+        <circle class="core" cx="300" cy="300" r="11.5"/>
+      </svg>
     </div>
-    <div>
-      <h5>Virksomhet</h5>
-      <p>
-        <a href="lyd-og-lys.html">Lyd &amp; lys</a><br>
-        <a href="eiendom.html">Eiendom</a><br>
-        <a href="kontakt.html">Kontakt</a>
-      </p>
+  </header>
+
+  <section class="doors" aria-label="Våre virksomheter">
+    <div class="wrap">
+      <article class="door">
+        <h2><a href="lyd-og-lys.html">Lyd og lys</a></h2>
+        <p>Leie av utstyr med eller uten tekniker. Fra et lite møterom til hovedscene på festival.</p>
+        <ul>
+          <li><span>PA</span><span>Meyer Sound</span></li>
+          <li><span>Backline</span><span>Trommer, forsterkere, piano</span></li>
+          <li><span>Mikrofoner</span><span>Shure, AKG, Sennheiser</span></li>
+          <li><span>Mannskap</span><span>Lyd- og lystekniker, scenecrew</span></li>
+        </ul>
+        <a class="link" href="lyd-og-lys.html">Se utstyr og be om tilbud</a>
+      </article>
+
+      <article class="door">
+        <h2><a href="eiendom.html">Eiendom</a></h2>
+        <p>Langsiktig eierskap i næringseiendom og eiendomsselskaper.</p>
+        <ul>
+          <li><span>Drammen Business Center</span><span>Drammen</span></li>
+          <li><span>Keiser Wilhelms gate 25</span><span>Ålesund</span></li>
+          <li><span>Nesta Eiendom AS</span><span>Selbu</span></li>
+          <li><span>Boligtomter</span><span>Selbu</span></li>
+        </ul>
+        <a class="link" href="eiendom.html">Se hele porteføljen</a>
+      </article>
     </div>
-    <div>
-      <h5>Kontakt</h5>
-      <p>
-        <a href="mailto:pjw@petors.no">pjw@petors.no</a><br><a href="mailto:taw@petors.no">taw@petors.no</a>
-      </p>
+  </section>
+
+  <section class="section" style="margin-top:clamp(56px,8vw,96px)">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Kontakt</h2>
+        <p>Ring eller send e-post direkte til den som har ansvaret.</p>
+      </div>
+      <div class="people">
+        <div class="person">
+          <div class="role">Lyd og lys</div>
+          <h3>Per Jørgen Weisethaunet</h3>
+          <a class="tel" href="tel:+4795962915">959 62 915</a>
+          <a href="mailto:pjw@petors.no">pjw@petors.no</a>
+        </div>
+        <div class="person">
+          <div class="role">Lyd og lys</div>
+          <h3>Pål André Weisethaunet</h3>
+          <a class="tel" href="tel:+4747638333">476 38 333</a>
+          <a href="mailto:paw@petors.no">paw@petors.no</a>
+        </div>
+        <div class="person">
+          <div class="role">Eiendom</div>
+          <h3>Torill Anita Weisethaunet</h3>
+          <a class="tel" href="tel:+4790777724">907 77 724</a>
+          <a href="mailto:taw@petors.no">taw@petors.no</a>
+        </div>
+      </div>
     </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
     <div>
-      <h5>Adresse</h5>
-      <p>Hommelvikhøgda<br>Malvikvegen 1565<br>7550 Hommelvik</p>
+      <img src="logo.jpg" alt="Petors as">
+      <div>Org.nr. 989 217 607</div>
     </div>
-  </div>
-  <div class="foot-bottom">
-    <span>© Petors AS 2026 · Org.nr. 989 217 607</span>
-    <span>Hommelvik · Trøndelag</span>
+    <address>Hommelvikhøgda, Malvikvegen 1565<br>7550 Hommelvik</address>
+    <div><a href="mailto:post@petors.no">post@petors.no</a></div>
   </div>
 </footer>
 
-<script>
-  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-  window.addEventListener('load',()=>document.querySelectorAll('header.hero .reveal').forEach(el=>el.classList.add('in')));
-</script>
 </body>
 </html>
