@@ -3,7 +3,8 @@
 ## Filer
 - `index.html` — Forside (enkel, kort)
 - `lyd-og-lys.html` — Underside: Petors AS
-- `eiendom.html` — Underside: Petors Estate
+- `investeringer.html` — Underside: investeringer (NORBIT, kriterier, Petors Estate)
+- `eiendom.html` — Videresender til `investeringer.html#eiendom`
 - `kontakt.html` — Underside: Kontakt
 - `styles.css` — Felles stilark
 - `logo.jpg` — Originallogoen din (brukt i navigasjonen)
