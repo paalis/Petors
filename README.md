@@ -25,3 +25,8 @@ og endre `<img src="logo.jpg" ...>` til `<img src="logo.svg" ...>` i alle fire H
 
 ## Åpne lokalt
 Dobbeltklikk index.html — sidene linker seg imellom.
+
+## Aksjekurs (NORBIT)
+Investeringssiden henter kursen til NORBIT ASA fra `https://petors-kurs.vercel.app/api/norbit`
+(Vercel-prosjektet «petors-kurs»). Kildekoden ligger i `kurs-api/`. Kursen er forsinket ca. 15 minutter
+og oppdateres hvert minutt mens siden er åpen. Svarer ikke tjenesten, skjules kursen.
