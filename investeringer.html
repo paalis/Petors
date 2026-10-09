@@ -61,6 +61,10 @@
 
   .criteria{grid-template-columns:repeat(2,minmax(0,1fr))}
 
+  /* kontakt nederst: to personer side om side */
+  .closing .contact-wrap{grid-template-columns:minmax(0,4fr) minmax(0,8fr);align-items:start}
+  .contact-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 48px}
+
   @media (max-width:900px){
     .register-head{display:none}
     .asset{grid-template-columns:120px minmax(0,1fr);gap:8px 20px;align-items:start}
@@ -69,11 +73,13 @@
     .asset .share::before{content:"Eierandel: ";color:var(--ink-2)}
   }
   @media (max-width:900px){
+    .closing .contact-wrap{grid-template-columns:1fr}
     .feature{grid-template-columns:1fr;border-radius:20px}
     .feature::after{width:300px;height:300px;right:-120px;bottom:-130px}
   }
   @media (max-width:600px){
     .criteria{grid-template-columns:1fr}
+    .contact-pair{grid-template-columns:1fr}
     /* portefølje som kort med bilde i full bredde */
     .register{border-bottom:0}
     .asset{display:block;padding:0;margin-bottom:32px;border-top:0}
@@ -206,14 +212,21 @@
   </section>
 
   <section class="closing">
-    <div class="wrap">
-      <div>
-        <h2>Ta kontakt</h2>
-        <p>Om investeringer: Per Jørgen Weisethaunet. Om lokaler og eiendom: Torill Anita Weisethaunet.</p>
-      </div>
-      <div class="actions">
-        <a class="btn" href="mailto:pjw@petors.no?subject=Investeringer">E-post om investeringer</a>
-        <a class="link" href="mailto:taw@petors.no?subject=Lokaler">Lokaler: taw@petors.no</a>
+    <div class="wrap contact-wrap">
+      <h2>Ta kontakt</h2>
+      <div class="contact-pair">
+        <div class="person">
+          <div class="role">Investeringer</div>
+          <h3>Per Jørgen Weisethaunet</h3>
+          <a class="tel" href="tel:+4795962915">959 62 915</a>
+          <a href="mailto:pjw@petors.no?subject=Investeringer">pjw@petors.no</a>
+        </div>
+        <div class="person">
+          <div class="role">Lokaler og eiendom</div>
+          <h3>Torill Anita Weisethaunet</h3>
+          <a class="tel" href="tel:+4790777724">907 77 724</a>
+          <a href="mailto:taw@petors.no?subject=Lokaler">taw@petors.no</a>
+        </div>
       </div>
     </div>
   </section>
