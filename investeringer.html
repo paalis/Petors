@@ -56,10 +56,16 @@
   .figures{display:grid;gap:24px;align-content:start}
   .figure{border-top:2px solid var(--ink);padding-top:14px}
   .figure b{display:block;font-family:var(--sans);font-weight:400;font-size:clamp(34px,4vw,48px);letter-spacing:-.02em;line-height:1.05;font-variant-numeric:tabular-nums}
-  .figure span{display:block;font-family:var(--sans);font-size:15px;color:var(--ink-2);margin-top:6px}
+  .figure > span{display:block;font-family:var(--sans);font-size:15px;color:var(--ink-2);margin-top:6px}
   .source{grid-column:1/-1;font-family:var(--sans);font-size:14px;color:var(--ink-2)}
 
   .criteria{grid-template-columns:repeat(2,minmax(0,1fr))}
+
+
+  /* aksjekurs */
+  .quote .change{font-weight:500;color:var(--ink)}
+  .quote .change.up{color:#2c7a4b}
+  .quote .change.down{color:#b0413e}
 
   /* kontakt nederst: to personer side om side */
   .closing .contact-wrap{grid-template-columns:minmax(0,4fr) minmax(0,8fr);align-items:start}
@@ -125,6 +131,10 @@
           <a class="link" href="https://norbit.com" rel="noopener">norbit.com</a>
         </div>
         <div class="figures">
+          <div class="figure quote" id="norbit-quote" hidden aria-live="polite">
+            <b>NOK <span data-price></span></b>
+            <span><span class="change" data-change></span> <span data-period>i dag</span>. Forsinket ca. 15 min, sist oppdatert <span data-time></span>.</span>
+          </div>
           <div class="figure"><b>7&#8239;015&#8239;735</b><span>aksjer eid av Petors AS</span></div>
           <div class="figure"><b>ca. 11&nbsp;%</b><span>av aksjene, sammen med nærstående</span></div>
         </div>
@@ -243,5 +253,32 @@
   </div>
 </footer>
 
+<script>
+// aksjekursen til NORBIT hentes fra en liten tjeneste på Vercel og oppdateres hvert minutt
+(function(){
+  var el=document.getElementById('norbit-quote');
+  if(!el||!window.fetch)return;
+  var API='https://petors-kurs.vercel.app/api/norbit';
+  var num=new Intl.NumberFormat('nb-NO',{minimumFractionDigits:2,maximumFractionDigits:2});
+  var pct=new Intl.NumberFormat('nb-NO',{minimumFractionDigits:1,maximumFractionDigits:1,signDisplay:'exceptZero'});
+  var tid=new Intl.DateTimeFormat('nb-NO',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Oslo'});
+  var dato=new Intl.DateTimeFormat('nb-NO',{day:'numeric',month:'short',timeZone:'Europe/Oslo'});
+  function load(){
+    fetch(API).then(function(r){return r.ok?r.json():Promise.reject(r.status)}).then(function(d){
+      if(typeof d.price!=='number')return;
+      el.querySelector('[data-price]').textContent=num.format(d.price);
+      var c=el.querySelector('[data-change]');
+      c.textContent=pct.format(d.changePercent)+' %';
+      c.className='change'+(d.changePercent>0?' up':d.changePercent<0?' down':'');
+      var t=new Date(d.time),idag=new Date().toDateString()===t.toDateString();
+      el.querySelector('[data-period]').textContent=idag?'i dag':'siste handelsdag';
+      el.querySelector('[data-time]').textContent=idag?'kl. '+tid.format(t):dato.format(t)+' kl. '+tid.format(t);
+      el.hidden=false;
+    }).catch(function(){});   // uten kurs vises bare de faste tallene
+  }
+  load();
+  setInterval(function(){if(!document.hidden)load()},60000);
+})();
+</script>
 </body>
 </html>
