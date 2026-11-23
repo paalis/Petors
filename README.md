@@ -1,32 +1,50 @@
-# Petors — nettsideforslag (v5)
+# Petors — nettside
 
 ## Filer
-- `index.html` — Forside (enkel, kort)
-- `lyd-og-lys.html` — Underside: Petors AS
-- `investeringer.html` — Underside: investeringer (NORBIT, kriterier, Petors Estate)
+- `index.html` — Forside
+- `lyd-og-lys.html` — Lyd og lys
+- `investeringer.html` — Investeringer (NORBIT, kriterier, Petors Estate)
+- `kontakt.html` — Kontakt
 - `eiendom.html` — Videresender til `investeringer.html#eiendom`
-- `kontakt.html` — Underside: Kontakt
+- `404.html` — Feilside (GitHub Pages bruker den automatisk)
 - `styles.css` — Felles stilark
-- `logo.jpg` — Originallogoen din (brukt i navigasjonen)
-- `mark.svg` — Selve sirkelmerket alene (brukes i footer, klar for favicon)
+- `fonts/` — Jost og Source Serif 4, med lisens (SIL Open Font License)
+- `img/` — Bilder i WebP, og `og.jpg` (delingsbilde, 1200 × 630)
+- `logo.webp` — Logoen
+- `mark.svg` — Sirkelmerket alene (favicon)
+- `robots.txt`, `sitemap.xml` — For søkemotorer
+- `kurs-api/` — Kildekoden til kurstjenesten for NORBIT (Vercel)
 
-## Logo
-Originallogoen er nå brukt direkte i nav-baren på alle fire sider.
-I footer brukes en forenklet SVG-versjon av selve sirkelmerket — det skalerer skarpt og kan farges via CSS.
+## Nettadresse
+Delingsmetadata (Open Graph), `canonical`, strukturerte data, `robots.txt` og `sitemap.xml`
+peker på `https://paalis.github.io/Petors/`. Flyttes siden til et eget domene (f.eks. petors.no),
+bytt ut den adressen i alle fire HTML-filer, `robots.txt` og `sitemap.xml`.
+`robots.txt` virker først når siden ligger på roten av et domene.
 
-Hvis du senere får en ren SVG-versjon av logoen, bytt ut `logo.jpg` med `logo.svg`
-og endre `<img src="logo.jpg" ...>` til `<img src="logo.svg" ...>` i alle fire HTML-filer.
-
-## Design
-- Farger: hvit, stålgrå (#eef1f4) og logoens blå (#4a6c9b) som eneste aksent. Alle ligger som CSS-variabler øverst i styles.css.
-- Skrift: Jost (titler, meny – geometrisk som logoen) og Source Serif 4 (brødtekst).
-- Merket (ring + prikk) er det eneste grafiske elementet: forstørret med ringer på forsiden, og som stedsmarkør i porteføljen.
-- Ingen JavaScript. Ringanimasjonen på forsiden kjører én gang og slås av ved «redusert bevegelse».
-
-## Åpne lokalt
-Dobbeltklikk index.html — sidene linker seg imellom.
+## Oppdatere NORBIT-tallene
+Antall aksjer, eierandel og dato står ett sted i `investeringer.html`, mellom kommentarene
+`NORBIT-TALL: OPPDATER HER` og `/NORBIT-TALL`. Hent tallene fra siste meldepliktige handel
+fra NORBIT ASA (newsweb.oslobors.no) og oppdater alle tre: aksjer, prosent og «Per …»-datoen.
 
 ## Aksjekurs (NORBIT)
 Investeringssiden henter kursen til NORBIT ASA fra `https://petors-kurs.vercel.app/api/norbit`
-(Vercel-prosjektet «petors-kurs»). Kildekoden ligger i `kurs-api/`. Kursen er forsinket ca. 15 minutter
-og oppdateres hvert minutt mens siden er åpen. Svarer ikke tjenesten, skjules kursen.
+(Vercel-prosjektet «petors-kurs»). Kursen oppdateres hvert minutt mens siden er åpen.
+Svarer ikke tjenesten, skjules kursen.
+
+## Logo
+Logoen er `logo.webp` (400 px bred). Finnes logoen som SVG, legg den inn som `logo.svg`
+og bytt `logo.webp` i alle HTML-filene.
+
+## Bilder
+Bildene er WebP, maks 1000 px brede, med `width` og `height` i HTML så siden ikke hopper
+mens den lastes. Nye bilder bør behandles på samme måte.
+
+## Design
+- Farger: hvit, stålgrå (#eef1f4) og logoens blå (#4a6c9b) som eneste aksent. Alle ligger som CSS-variabler øverst i `styles.css`.
+- Skrift: Jost (titler, meny) og Source Serif 4 (brødtekst), lastet fra `fonts/`.
+- Merket (ring + prikk) er det gjennomgående grafiske elementet.
+- Forsiden har en kort intro som spilles én gang per besøk, og som slås av ved «redusert bevegelse».
+
+## Endre stilarket
+Når `styles.css` endres, øk tallet i `styles.css?v=…` i alle HTML-filene, så besøkende ikke får
+gammel CSS fra nettleserens hurtigbuffer.

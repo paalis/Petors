@@ -4,6 +4,12 @@
    er det eneste grafiske elementet.
    ========================================================= */
 
+/* fonter ligger på nettstedet selv (SIL Open Font License, se fonts/) */
+@font-face{font-family:"Jost";font-style:normal;font-weight:100 900;font-display:swap;
+  src:url(fonts/jost-latin.woff2) format("woff2")}
+@font-face{font-family:"Source Serif 4";font-style:normal;font-weight:400;font-display:swap;
+  src:url(fonts/source-serif-4-latin.woff2) format("woff2")}
+
 :root{
   --paper:#ffffff;
   --mist:#eef1f4;
@@ -29,8 +35,9 @@ body{
   font-family:var(--serif);font-size:17px;line-height:1.6;
   -webkit-font-smoothing:antialiased;
 }
-img{max-width:100%;display:block}
+img{max-width:100%;height:auto;display:block}
 a{color:inherit}
+.visually-hidden{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 :focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:2px}
 
 .wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--gutter)}
